@@ -1,5 +1,3 @@
-
-
 //*************************************************************************************************************************************
 // this is for dependency injection, y'all
 // the purpose is to inject dependencies / values that are acquired *asynchronously*
@@ -9,39 +7,49 @@
 
 module.exports = () => {  //load async deps for any of your suman tests
 
-	return {
+  return {
 
-		'one': function(){
-			return 'one';
-		},
+    'one': [function (v) {
+      console.log('one v =>', v);
+      return 'one';
+    }],
 
-		'charlie': function () {
-			return 'charlie';
-		},
-		'smartconnect': function () {
+    'two': ['one', function (v) {
+      console.log('two v =>', v);
+      return 'two';
+    }],
 
-			return Promise.resolve(JSON.stringify({
-				formica: 'not metal'
-			}));
+    'three': ['one', 'two', function (v) {
+      console.log('three v =>', v);
+      return 'three';
+    }],
 
-		},
-		'dolce-vida': cb => {
+    'charlie': function () {
+      return 'charlie';
+    },
+    'smartconnect': function () {
 
-			setTimeout(function () {
-				cb(null, "new Error('rub')");
-			}, 10);
+      return Promise.resolve(JSON.stringify({
+        formica: 'not metal'
+      }));
 
-		},
+    },
+    'dolce-vida': cb => {
 
-		'mulch': cb => {
+      setTimeout(function () {
+        cb(null, "new Error('rub')");
+      }, 10);
 
-			setTimeout(function () {
-				cb(null, "new Error('mulch')");
-			}, 10);
+    },
 
-		}
+    'mulch': cb => {
 
+      setTimeout(function () {
+        cb(null, "new Error('mulch')");
+      }, 10);
 
-	}
+    }
+
+  }
 
 };
