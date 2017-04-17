@@ -789,8 +789,7 @@ const init: suman.IInit = function ($module: ISumanModuleExtended, $opts: suman.
 
       d.run(function () {
 
-        if (process.env.SUMAN_SINGLE_PROCESS === 'yes') {
-
+        if (su.isSumanSingleProcess()) {
           acquireIntegrantsSingleProcess(integrants, integPreConfiguration,
             su.onceAsync(null, function (err: Error, vals: Array<any>) {
               d.exit();
@@ -804,13 +803,11 @@ const init: suman.IInit = function ($module: ISumanModuleExtended, $opts: suman.
               });
 
             }));
-
         }
         else {
 
           acquireDeps(integrants, integPreConfiguration,
             su.onceAsync(null, function (err: Error, vals: Array<any>) {
-
               d.exit();
               process.nextTick(function () {
                 if (err) {
@@ -820,7 +817,6 @@ const init: suman.IInit = function ($module: ISumanModuleExtended, $opts: suman.
                   integrantsEmitter.emit('vals', vals);
                 }
               });
-
             }));
         }
 
@@ -874,7 +870,7 @@ const init: suman.IInit = function ($module: ISumanModuleExtended, $opts: suman.
       const to = setTimeout(function () {
         console.error(' => Suman usage error => Integrant acquisition timeout.');
         process.exit(constants.EXIT_CODES.INTEGRANT_ACQUISITION_TIMEOUT);
-      }, _suman.weAreDebugging ? 50000000 : 50000);
+      }, _suman.weAreDebugging ? 50000000 : 500000);
 
       function onPreVals(vals: Array<any>) {
 

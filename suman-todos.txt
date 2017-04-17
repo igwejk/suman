@@ -1,7 +1,8 @@
 
 
-///
+bash '/Applications/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh'
 
+///
 
 grep -r --exclude "./node_modules/**" --exclude "**/node_modules/**" --exclude "./dist/**" --exclude "**/test/**" --exclude "*.log" --exclude "**/suman-todos.txt" 'global\.' . | grep -Ev 'global\.__suman' > grep.log
 
